@@ -1,6 +1,6 @@
 ## 🐷 MES Wizard
 
-**MES Wizard POC** is a simple mock-up app designed to simulate step-by-step actions in a Meat Execution System (MES) environment. It provides a dynamic flow of operations such as confirmations, photo uploads, and label printing, powered by a lightweight Node.js API.
+**MES Wizard POC** is a simple mock-up app designed to simulate step-by-step actions in a Meat Execution System (MES) environment. It provides a dynamic flow of operations such as confirmations, photo uploads, and label printing, powered by a lightweight PowerShell API.
 
 ---
 
@@ -17,9 +17,9 @@
 
 ## 🧱 Tech Stack
 
-* **Frontend**: React (or your chosen framework)
-* **Backend - just a stub!!!**: Node.js + Express
-* **File Uploads**: `multer`
+* **Frontend**: Blazor WebAssembly
+* **Backend - just a stub!!!**: PowerShell HttpListener
+* **File Uploads**: form-data handling
 * **Dev Tools**: CORS, JSON body parsing
 ---
 
@@ -43,8 +43,7 @@ cd mes-wizard
 
 ```bash
 cd mockup-api
-npm install
-node server.js
+powershell -ExecutionPolicy Bypass -File .\mes-api.ps1
 ```
 
 This runs the mock MES API at:
@@ -54,15 +53,15 @@ You’ll see logs for each API request in the console.
 
 ---
 
-### 3. Start the React frontend
+### 3. Build and run the Blazor frontend
 
 ```bash
-npm install
-npm start
+cd blazor/MesWizard
+dotnet run
 ```
 
 The app will open in your browser at:
-**`http://localhost:3000`**
+**`http://localhost:5000`**
 
 Make sure the frontend uses `http://localhost:3001` to communicate with the backend.
 

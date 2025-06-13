@@ -1,0 +1,7 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>MesWizard</RootNamespace>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>
