@@ -1,0 +1,75 @@
+@page "/"
+@inject HttpClient Http
+
+<h3>MES Wizard</h3>
+
+@if (stationInfo is not null)
+{
+    <div>Station: @stationInfo.name<br/>Printer: @stationInfo.printer</div>
+}
+
+@if (animalInfo is null)
+{
+    <input @bind="slaughterNumber" placeholder="Slaughter number" />
+    <button @onclick="() => FetchAnimalInfo(slaughterNumber)">Start</button>
+}
+else if (!done && currentAction is not null)
+{
+    <h4>@currentAction.description</h4>
+    @if (currentAction.type == "confirm")
+    {
+        <button @onclick="HandleSubmit">Confirm</button>
+    }
+    @if (currentAction.type == "input")
+    {
+        <input @bind="inputValue" />
+        <button @onclick="HandleSubmit">Submit</button>
+    }
+}
+else if (done)
+{
+    <h4>Finished</h4>
+}
+
+@code {
+    string slaughterNumber = string.Empty;
+    ActionStep? currentAction;
+    string inputValue = string.Empty;
+    bool done = false;
+
+    StationInfo? stationInfo;
+    AnimalInfo? animalInfo;
+
+    protected override async Task OnInitializedAsync()
+    {
+        stationInfo = await Http.GetFromJsonAsync<StationInfo>("station");
+    }
+
+    async Task FetchAnimalInfo(string num)
+    {
+        animalInfo = await Http.GetFromJsonAsync<AnimalInfo>($"animal-info?number={num}");
+        await FetchNextAction();
+    }
+
+    async Task FetchNextAction()
+    {
+        currentAction = await Http.GetFromJsonAsync<ActionStep>("next-action");
+        if (currentAction.finished == true)
+        {
+            done = true;
+            currentAction = null;
+        }
+    }
+
+    async Task HandleSubmit()
+    {
+        if (currentAction is null) return;
+        var payload = new { slaughterNumber, action = currentAction.id, value = inputValue };
+        await Http.PostAsJsonAsync("submit", payload);
+        await FetchNextAction();
+    }
+
+    record ActionStep(string id, string description, string type, bool? finished);
+    record StationInfo(string name, string printer);
+    record AnimalInfo(string id, string type, string date);
+}
