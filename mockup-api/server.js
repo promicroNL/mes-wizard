@@ -7,10 +7,20 @@ const upload = multer({ dest: 'uploads/' });
 app.use(cors());
 app.use(express.json());
 
+// List of all possible steps returned one at a time via /next-action
+// Additional action types have been added to better simulate shop floor
+// activities (e.g. selecting a destination or entering remarks).
 let steps = [
   { id: "confirm-shoulder", description: "Is the animal divided?", type: "confirm" },
   { id: "remove-injury", description: "Remove shoulder injury from carcass", type: "confirm" },
+  {
+    id: "select-destination",
+    description: "Where does the removed part go?",
+    type: "select",
+    options: ["Processing", "Rendering"],
+  },
   { id: "input-weight", description: "Enter weight of removed part (kg)", type: "input" },
+  { id: "note-remarks", description: "Add additional remarks", type: "textarea" },
   { id: "upload-photo", description: "Upload picture of removed part", type: "photo" },
   { id: "print-labels", description: "Print new label", type: "labels" },
 ];
