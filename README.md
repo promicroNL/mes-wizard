@@ -1,13 +1,13 @@
 ## 🐷 MES Wizard
 
-**MES Wizard POC** is a simple mock-up app designed to simulate step-by-step actions in a Meat Execution System (MES) environment. It provides a dynamic flow of operations such as confirmations, photo uploads, and label printing, powered by a lightweight Node.js API.
+**MES Wizard POC** is a simple mock-up app designed to simulate step-by-step actions in a Meat Execution System (MES) environment. It provides a dynamic flow of operations such as confirmations, option selections, text entry, photo uploads and label printing, powered by a lightweight Node.js API.
 
 ---
 
 ### 🚀 Features
 
 * Step-by-step action flow (one action at a time)
-* Dynamic action types: confirm, input, photo, label
+* Dynamic action types: confirm, input, select, textarea, photo, label
 * Automatically marks the final step with `finished: true`
 * Fully resettable session via API
 * Simple local image upload and form submission
@@ -82,13 +82,26 @@ Make sure the frontend uses `http://localhost:3001` to communicate with the back
 
 ---
 
+### Default workflow steps
+
+1. **confirm-shoulder** – `confirm`
+2. **remove-injury** – `confirm`
+3. **select-destination** – `select`
+4. **input-weight** – `input`
+5. **note-remarks** – `textarea`
+6. **upload-photo** – `photo`
+7. **print-labels** – `labels`
+
+---
+
 ## 🧪 Example Output
 
 ```json
 [
-  "id": "input-weight",
-  "description": "Enter weight of removed part (kg)",
-  "type": "input",
+  "id": "select-destination",
+  "description": "Where does the removed part go?",
+  "type": "select",
+  "options": ["Processing", "Rendering"],
   "finished": false
 ]
 ```

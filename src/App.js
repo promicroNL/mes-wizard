@@ -77,6 +77,15 @@ function App() {
     return () => clearTimeout(resetTimer);
   }, [done, countdown, slaughterNumber]);
 
+  // When a new action arrives, prefill values if necessary
+  useEffect(() => {
+    if (currentAction?.type === "select" && Array.isArray(currentAction.options) && currentAction.options.length > 0) {
+      setInputValue(currentAction.options[0]);
+    } else if (currentAction?.type === "textarea") {
+      setInputValue("");
+    }
+  }, [currentAction]);
+
   async function handleSubmit(eventOrValue = null) {
     const value = typeof eventOrValue === 'string' || eventOrValue === null ? (eventOrValue ?? inputValue) : inputValue;
 
@@ -218,6 +227,33 @@ function App() {
                       <input
                         className="border p-2 w-full"
                         type="text"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                      />
+                      <button className="bg-blue-500 text-white px-4 py-2 mt-2 w-full" onClick={handleSubmit}>Submit</button>
+                    </div>
+                  )}
+
+                  {currentAction.type === "select" && (
+                    <div>
+                      <select
+                        className="border p-2 w-full"
+                        value={inputValue}
+                        onChange={(e) => setInputValue(e.target.value)}
+                      >
+                        {currentAction.options?.map(option => (
+                          <option key={option} value={option}>{option}</option>
+                        ))}
+                      </select>
+                      <button className="bg-blue-500 text-white px-4 py-2 mt-2 w-full" onClick={handleSubmit}>Submit</button>
+                    </div>
+                  )}
+
+                  {currentAction.type === "textarea" && (
+                    <div>
+                      <textarea
+                        className="border p-2 w-full"
+                        rows="4"
                         value={inputValue}
                         onChange={(e) => setInputValue(e.target.value)}
                       />
