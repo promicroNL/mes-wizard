@@ -86,12 +86,10 @@ Make sure the frontend uses `http://localhost:3001` to communicate with the back
 
 ```json
 [
-  {
-    "id": "input-weight",
-    "description": "Enter weight of removed part (kg)",
-    "type": "input",
-    "finished": false
-  }
+  "id": "input-weight",
+  "description": "Enter weight of removed part (kg)",
+  "type": "input",
+  "finished": false
 ]
 ```
 
@@ -99,19 +97,17 @@ Final step will include:
 
 ```json
 [
-  {
-    "id": "print-labels",
-    "description": "Print new label",
-    "type": "labels",
-    "finished": true
-  }
+  "id": "print-labels",
+  "description": "Print new label",
+  "type": "labels",
+  "finished": true
 ]
 ```
 
 Or if all steps are done:
 
 ```json
-[{ "finished": true }]
+[ "finished": true ]
 ```
 
 ---
