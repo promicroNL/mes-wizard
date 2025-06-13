@@ -42,6 +42,7 @@ cd mes-wizard
 ### 2. Start the backend server
 
 ```bash
+cd mockup-api
 npm install
 node server.js
 ```
@@ -56,7 +57,6 @@ You’ll see logs for each API request in the console.
 ### 3. Start the React frontend
 
 ```bash
-cd client
 npm install
 npm start
 ```
